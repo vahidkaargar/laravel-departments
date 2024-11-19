@@ -4,7 +4,7 @@
   "type": "library",
   "keywords": [
     "laravel",
-    "departments_system",
+    "departments",
     "package"
   ],
   "license": "MIT",
@@ -12,6 +12,10 @@
     {
       "email": "vahidkaargar@gmail.com",
       "name": "Vahid Kaargar"
+    },
+    {
+      "email": "momenih333@gmail.com",
+      "name": "Hamidreza Momeni"
     }
   ],
   "autoload": {
@@ -20,10 +24,11 @@
     }
   },
   "require": {
-    "php": ">=7.4",
-    "illuminate/support": "^5.0|^6.0|^7.0|^8.0|^9.0|^10.0|^11.0",
+    "php": ">=8.0",
+    "illuminate/support": "*",
     "josantonius/http-status-code": "^1.0|^2.0",
-    "guzzlehttp/guzzle": "^7.2"
+    "guzzlehttp/guzzle": "^7.2",
+    "illuminate/database": "*"
   },
   "require-dev": {
     "phpunit/phpunit": "^10",
@@ -38,7 +43,10 @@
     "laravel": {
       "providers": [
         "vahidkaargar\\LaravelDepartments\\ServiceProviders\\DepartmentsServiceProvider"
-      ]
+      ],
+      "aliases": {
+        "Departments": "VahidKaargar\\LaravelDepartments\\Facades\\Departments"
+      }
     }
   }
 }
