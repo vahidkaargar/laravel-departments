@@ -9,11 +9,11 @@ use Illuminate\Support\Facades\Schema;
 return new class extends Migration {
     public function up(): void
     {
-        Schema::create('departments', function (Blueprint $table) {
+        Schema::create('user_departments', function (Blueprint $table) {
             $table->id();
-            $table->string('title');
-            $table->longText('body')->nullable();
-            $table->boolean('is_active')->index()->default(false);
+            $table->foreignId('department_id')->index()->constrained()->cascadeOnDelete();
+            $table->foreignId('user_id')->index()->constrained()->cascadeOnDelete();
+            $table->boolean('is_active')->default(false);
             $table->softDeletes();
             $table->timestamps();
         });

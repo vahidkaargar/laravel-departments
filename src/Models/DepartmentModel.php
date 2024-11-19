@@ -3,8 +3,11 @@
 namespace vahidkaargar\LaravelDepartments\Models;
 
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\SoftDeletes;
 
-class Department extends Model
+class DepartmentModel extends Model
 {
+    use SoftDeletes;
+
     protected $fillable = ['title', 'body', 'is_active'];
 }
