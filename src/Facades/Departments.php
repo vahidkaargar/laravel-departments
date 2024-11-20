@@ -4,7 +4,7 @@ namespace vahidkaargar\LaravelDepartments\Facades;
 
 use Illuminate\Support\Facades\Facade;
 
-class DepartmentsFacade extends Facade
+class Departments extends Facade
 {
     /**
      * Get the registered name of the component.
@@ -13,6 +13,6 @@ class DepartmentsFacade extends Facade
      */
     protected static function getFacadeAccessor()
     {
-        return 'departments';
+        return 'Departments';
     }
 }
