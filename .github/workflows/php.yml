@@ -32,16 +32,5 @@ jobs:
       - name: Install dependencies
         run: composer install --prefer-dist --no-progress
 
-      - name: Create Database
-        run: |
-          mkdir -p database
-          touch database/database.sqlite
-          
-      - name: Run migration
-        env:
-          DB_CONNECTION: sqlite
-          DB_DATABASE: dev/db.sqlite
-        run: php artisan migrate:fresh --seed
-
       - name: Run tests
         run: ./vendor/bin/phpunit
