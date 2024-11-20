@@ -9,11 +9,11 @@ class DepartmentsServiceProvider extends ServiceProvider
 {
     public function register(): void
     {
-        $this->singletonFromDepartmentsClass();
+        $this->app->singleton('Departments', function ($app) {
+            return new Departments();
+        });
 
-        // load files
         $this->mergeConfigFrom(__DIR__ . '/../Configs/departments.php', 'departments');
-        $this->loadMigrationsFrom(__DIR__ . '/../Database/Migrations');
     }
 
     public function boot(): void
@@ -30,13 +30,7 @@ class DepartmentsServiceProvider extends ServiceProvider
 
         }
 
-        require_once __DIR__ . '/../Helpers/helpers.php';
-    }
-
-    private function singletonFromDepartmentsClass(): void
-    {
-        $this->app->singleton('departments', function ($app) {
-            return new Departments();
-        });
+        // load migrations for considered in "php artisan migrate"
+        $this->loadMigrationsFrom(__DIR__ . '/../Database/Migrations');
     }
 }

@@ -9,5 +9,6 @@ class DepartmentModel extends Model
 {
     use SoftDeletes;
 
+    protected $table = 'departments';
     protected $fillable = ['title', 'body', 'is_active'];
 }
