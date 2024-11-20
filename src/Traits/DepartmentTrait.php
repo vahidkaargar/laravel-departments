@@ -1,40 +1,46 @@
 <?php
 
-/*
- * Example of usage
- * $department = Departments::create($payload);
- * or
- * $department = Departments::find($id);
- * Assign department to user
- * User::find(6)->assignDepartment($department)
- */
-
-
 namespace vahidkaargar\LaravelDepartments\Traits;
 
-use vahidkaargar\LaravelDepartments\Facades\Departments;
+use Illuminate\Support\Collection;
+use vahidkaargar\LaravelDepartments\Models\DepartmentModel;
+use vahidkaargar\LaravelDepartments\Models\UserDepartmentModel;
 use vahidkaargar\LaravelDepartments\Services\AssignUserToDepartments;
 
 
+/**
+ * @method hasManyThrough(string $class, string $class1)
+ */
 trait DepartmentTrait
 {
-    public function deAssignDepartment(Departments $departments)
+    /**
+     * @param DepartmentModel $departments
+     * @return bool|DepartmentModel
+     */
+    public function deAssignDepartment(DepartmentModel $departments): bool|DepartmentModel
     {
-        return AssignUserToDepartments::unset($departments, $this->id) ? $departments->refresh() : false;
+        return AssignUserToDepartments::unset($departments, $this->id) ? $departments : false;
     }
 
-    public function assignDepartment(Departments $departments)
+    /**
+     * @param DepartmentModel $departments
+     * @return bool|DepartmentModel
+     */
+    public function assignDepartment(DepartmentModel $departments): bool|DepartmentModel
     {
-        return AssignUserToDepartments::set($departments, $this->id) ? $departments->refresh() : false;
+        return AssignUserToDepartments::set($departments, $this->id) ? $departments : false;
     }
 
-    public function getDepartments()
+    /**
+     * @return Collection
+     */
+    public function getDepartments(): Collection
     {
-        return $this->departments()->get();
+        return $this->departments()->get()->collect();
     }
 
     public function departments()
     {
-        return $this->hasManyThrough(DepartmentModel::class, UserDepartment::class);
+        return $this->hasManyThrough(DepartmentModel::class, UserDepartmentModel::class);
     }
 }

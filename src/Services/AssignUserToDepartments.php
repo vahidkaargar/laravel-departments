@@ -2,12 +2,12 @@
 
 namespace vahidkaargar\LaravelDepartments\Services;
 
-use vahidkaargar\LaravelDepartments\Facades\Departments;
+use vahidkaargar\LaravelDepartments\Models\DepartmentModel;
 use vahidkaargar\LaravelDepartments\Models\UserDepartmentModel;
 
 class AssignUserToDepartments
 {
-    public static function unset(Departments $departments, int $userId): bool
+    public static function unset(DepartmentModel $departments, int $userId): bool
     {
         return UserDepartmentModel::query()
             ->where('department_id', $departments->id)
@@ -15,11 +15,15 @@ class AssignUserToDepartments
             ->delete();
     }
 
-    public static function set(Departments $departments, int $userId)
+    public static function set(DepartmentModel $departments, int $userId): bool|DepartmentModel
     {
-        return UserDepartmentModel::firstOrCreate([
+        $payload = [
             'user_id' => $userId,
             'department_id' => $departments->id,
-        ]) ? $departments->refresh() : false;
+        ];
+
+        return UserDepartmentModel::query()->firstOrCreate($payload)
+            ? $departments->refresh()
+            : false;
     }
 }
