@@ -2,11 +2,17 @@
 
 namespace vahidkaargar\LaravelDepartments\Interfaces;
 
+use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Collection;
 use vahidkaargar\LaravelDepartments\Models\DepartmentModel;
 
 interface DepartmentsInterface
 {
+    /**
+     * @return Builder
+     */
+    public function query(): Builder;
+
     /**
      * Get all department records.
      *
@@ -18,9 +24,9 @@ interface DepartmentsInterface
      * Find a department by its ID.
      *
      * @param int $id
-     * @return DepartmentModel|null
+     * @return \Illuminate\Support\Collection
      */
-    public function find(int $id): ?DepartmentModel;
+    public function find(int $id): \Illuminate\Support\Collection;
 
     /**
      * Create a new department record.
