@@ -21,7 +21,10 @@
   "autoload": {
     "psr-4": {
       "vahidkaargar\\LaravelDepartments\\": "src/"
-    }
+    },
+    "files": [
+      "src/Helpers/helpers.php"
+    ]
   },
   "require": {
     "php": ">=8.0",
@@ -45,7 +48,7 @@
         "vahidkaargar\\LaravelDepartments\\ServiceProviders\\DepartmentsServiceProvider"
       ],
       "aliases": {
-        "Departments": "VahidKaargar\\LaravelDepartments\\Facades\\Departments"
+        "Departments": "Departments"
       }
     }
   }
