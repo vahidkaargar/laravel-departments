@@ -2,7 +2,7 @@
 
 namespace vahidkaargar\LaravelDepartments;
 
-use Illuminate\Database\Eloquent\{Collection, ModelNotFoundException};
+use Illuminate\Database\Eloquent\{Builder, Collection, ModelNotFoundException};
 use vahidkaargar\LaravelDepartments\{Interfaces\DepartmentsInterface, Models\DepartmentModel};
 
 class Departments implements DepartmentsInterface
@@ -22,11 +22,11 @@ class Departments implements DepartmentsInterface
     }
 
     /**
-     * @return DepartmentModel
+     * @return Builder
      */
-    public function query()
+    public function query(): Builder
     {
-        return $this->model;
+        return $this->model->newQuery();
     }
 
     /**
@@ -43,11 +43,11 @@ class Departments implements DepartmentsInterface
      * Find a department by its ID.
      *
      * @param int $id
-     * @return DepartmentModel|null
+     * @return \Illuminate\Support\Collection
      */
-    public function find(int $id): ?DepartmentModel
+    public function find(int $id): \Illuminate\Support\Collection
     {
-        return $this->model->find($id);
+        return $this->query()->find($id)->collect();
     }
 
     /**
@@ -59,7 +59,6 @@ class Departments implements DepartmentsInterface
     public function create(array $payload): DepartmentModel|bool
     {
         $department = $this->model->newInstance()->fill($payload);
-
         return $department->save() ? $department : false;
     }
 
@@ -72,15 +71,15 @@ class Departments implements DepartmentsInterface
      */
     public function update(int $id, array $payload): DepartmentModel|bool
     {
-        $department = $this->find($id);
+        $department = $this->query()->find($id);
 
-        if (!$department) {
-            return $this->handleError("Department with ID {$id} not found.");
+        if (blank($department)) {
+            return $this->handleError("Department with ID $id not found.");
         }
 
-        $department->fill($payload);
+        $department = $department->fill($payload);
 
-        return $department->save() ? $department : false;
+        return $department->save() ? $department->first() : false;
     }
 
     /**
@@ -91,13 +90,10 @@ class Departments implements DepartmentsInterface
      */
     public function delete(int $id): bool
     {
-        $department = $this->find($id);
-
-        if (!$department) {
-            return $this->handleError("Department with ID {$id} not found.");
-        }
-
-        return (bool)$department->delete();
+        $department = $this->query()->find($id);
+        return filled($department)
+            ? $department->delete()
+            : $this->handleError("Department with ID $id not found.");
     }
 
     /**
@@ -106,7 +102,7 @@ class Departments implements DepartmentsInterface
      * @param string $message
      * @return mixed
      */
-    private function handleError(string $message): mixed
+    private function handleError(string $message): bool
     {
         if (config('app.debug')) {
             throw new ModelNotFoundException($message);
