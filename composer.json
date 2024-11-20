@@ -28,10 +28,10 @@
   },
   "require": {
     "php": ">=8.0",
-    "illuminate/support": "*",
     "josantonius/http-status-code": "^1.0|^2.0",
     "guzzlehttp/guzzle": "^7.2",
-    "illuminate/database": "*"
+    "illuminate/database": "^v10",
+    "illuminate/support": "^v10"
   },
   "require-dev": {
     "phpunit/phpunit": "^10",
