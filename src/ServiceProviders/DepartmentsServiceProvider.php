@@ -9,7 +9,7 @@ class DepartmentsServiceProvider extends ServiceProvider
 {
     public function register(): void
     {
-        $this->app->singleton('Departments', function ($app) {
+        $this->app->singleton('Departments', function () {
             return new Departments();
         });
 
