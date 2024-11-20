@@ -22,6 +22,14 @@ class Departments implements DepartmentsInterface
     }
 
     /**
+     * @return DepartmentModel
+     */
+    public function query()
+    {
+        return $this->model;
+    }
+
+    /**
      * Get all department records.
      *
      * @return Collection
