@@ -1,6 +1,6 @@
 <?php
 
-namespace VahidKaargar\LaravelDepartments;
+namespace vahidkaargar\LaravelDepartments;
 
 use Illuminate\Database\Eloquent\{Collection, ModelNotFoundException};
 use vahidkaargar\LaravelDepartments\{Interfaces\DepartmentsInterface, Models\DepartmentModel};
